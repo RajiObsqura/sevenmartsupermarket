@@ -39,6 +39,11 @@ public class PageUtilities {
 	public void dismissAlert() {
 
 	}
+	public void select_ByVisibleText(WebElement element, String text) {
+		Select select = new Select(element);
+		select.selectByVisibleText(text);
+	}
+	
 
 	public boolean isDisplayed(WebElement element) {
 		return element.isDisplayed();
