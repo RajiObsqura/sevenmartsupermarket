@@ -10,6 +10,9 @@ import com.sevenmartsupermarket.base.Base;
 import com.sevenmartsupermarket.pages.AdminUserPage;
 import com.sevenmartsupermarket.pages.HomePage;
 import com.sevenmartsupermarket.pages.LoginPage;
+import com.sevenmartsupermarket.utilities.ExcelReader;
+import com.sevenmartsupermarket.utilities.GeneralUtilities;
+import com.sevenmartsupermarket.utilities.ScreenShotCapture;
 
 
 
@@ -17,6 +20,7 @@ public class AdminUserTest extends Base {
 	LoginPage loginpage;
 	HomePage homepage;
 	AdminUserPage adminuserpage;
+	ExcelReader excelread = new ExcelReader();
 
 	@Test
 	public void adminUserClick() {
@@ -29,23 +33,35 @@ public class AdminUserTest extends Base {
         
 	}
 	@Test 
-	public void addNewUser()
+	public void verifyNewNewUserCreation()
 	{
+		ScreenShotCapture screenshotcapture=new ScreenShotCapture();
 		loginpage = new LoginPage(driver);
 		loginpage.login();
-		homepage = new HomePage(driver);
+		//homepage = new HomePage(driver);
 		adminuserpage = new AdminUserPage(driver);
 		adminuserpage.adminUserClick();
         adminuserpage.newButtonClick();	
-        adminuserpage.getUserNameClick();
-        adminuserpage.getStaffType();
-        adminuserpage.savenewuser();
+        excelread.setExcelFile("UserCreationData", "UserData");
+        String username = excelread.getCellData(2, 0);
+        //username=username+GeneralUtilities.getRandomFullName();
+        screenshotcapture.takeScreenshot(driver, "screenshot1");
+        String password = excelread.getCellData(2, 1);
+		String usertype = excelread.getCellData(2, 2);
+		adminuserpage.saveUser(username, password, usertype); 
+		String actual = adminuserpage.getTextAlertMessage();
+		String expected = "User Created Successfully";
+		Boolean result = actual.contains(expected);
+		Assert.assertTrue(result);
+		
+       
         
 	}
 	@Test(dataProvider = "SearchData", dataProviderClass = DataProviderNew.class)
 	
 	public void searchUser(String username ,String userType)throws InterruptedException
 	{
+		//ScreenShotCapture screenshotcapture=new ScreenShotCapture();
 		loginpage = new LoginPage(driver);
 		loginpage.login();
 		homepage = new HomePage(driver);
@@ -55,7 +71,51 @@ public class AdminUserTest extends Base {
 		adminuserpage.searchUsername(username);
 		adminuserpage.searchUserType(userType);
 		adminuserpage.searchClick();
+		//screenshotcapture.takeScreenshot(driver, "screenshot1");
+		
+	}//listeners-interface whether testcase passed or failed
+	
+	@Test
+	public void verifyUser(String username ,String userType)throws InterruptedException
+	{
+		
+		loginpage = new LoginPage(driver);
+		loginpage.login();
+		homepage = new HomePage(driver);
+		adminuserpage = new AdminUserPage(driver);
+		adminuserpage.adminUserClick();
+		adminuserpage.searchUser();
+		adminuserpage.searchUsername(username);
+		adminuserpage.searchUserType(userType);
+		adminuserpage.searchClick();
+		 
+		String actualUserName=adminuserpage.verifyUserdata();
+		String expectedUserNmae="tomy";
+		Assert.assertEquals(actualUserName, expectedUserNmae);
+		
+	}
+	@Test
+	public void listNames()
+	{
+		loginpage = new LoginPage(driver);
+		loginpage.login();
+		homepage = new HomePage(driver);
+		adminuserpage = new AdminUserPage(driver);
+		adminuserpage.adminUserClick();
+		adminuserpage.listAllUsers();
 	}
 	
+	@Test
+	public void verifyDeactivationFunctionality() 
+	{
+		loginpage = new LoginPage(driver);
+		loginpage.login();
+		homepage = new HomePage(driver);
+		adminuserpage = new AdminUserPage(driver);
+		adminuserpage.adminUserClick();
+		adminuserpage.deactivateUser("Trump");
 	}
+	}
+	
+	
 
