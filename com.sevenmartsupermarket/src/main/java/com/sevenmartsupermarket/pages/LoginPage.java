@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import com.sevenmartsupermarket.constants.Constants;
+import com.sevenmartsupermarket.utilities.WaitUtility;
 
 public class LoginPage {
 	// driver
@@ -57,6 +58,7 @@ public class LoginPage {
 	}
 
 	public void login() {
+		WaitUtility waitutility=new WaitUtility(driver);
 		String userName = properties.getProperty("userName");
 		String password = properties.getProperty("password");
 		enterUserName(userName);
