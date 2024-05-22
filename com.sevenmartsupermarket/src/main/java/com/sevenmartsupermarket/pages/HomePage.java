@@ -21,7 +21,10 @@ public class HomePage {
 	@FindBy(xpath = "//ul//li[3]")
 	private WebElement manageProductElement;
 	By homePageWaitElement=By.xpath("//a[@class='d-block']");
-    
+    @FindBy(xpath="//a[@class='dropdown-item'][2]")
+    private WebElement logoutbutton;
+    @FindBy(xpath="(//a[@class='nav-link'])[2]")
+    private WebElement profilelogo;
 	public HomePage(WebDriver driver) 
 	{
 		this.driver = driver;
@@ -34,6 +37,11 @@ public class HomePage {
 
 	public void pushNotificationClick() {
 		pushbutton.click();
+	}
+	public void logout()
+	{  
+		profilelogo.click();
+		logoutbutton.click();
 	}
 
 	public void clickOnManageProduct() {
