@@ -39,7 +39,10 @@ public class PushNotificationTest extends Base
 		excelread.setExcelFile("PushNotificationExcel", "Notification"); //workbookname, sheetName
 		String title = excelread.getCellData(1, 0);
 		String description = excelread.getCellData(1, 1);
+		//String userName = excelReader.getCellData(4, 0) ;
 		
+		//String userName = excelReader.getCellData(4, 0) ;
+		//userName = userName + GeneralUtility.getRandomFullName();
 		pushnotificationpage.sendNotification(title, description);
 		String actualAlertMsg= pushnotificationpage.verifyAlertMsg();
 		String expectedAlertMsg="Message send successfully";
