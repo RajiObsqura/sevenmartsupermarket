@@ -33,7 +33,7 @@ public class AdminUserTest extends Base {
         
 	}
 	@Test 
-	public void verifyNewNewUserCreation()
+	public void verifyNewUserCreation()
 	{
 		ScreenShotCapture screenshotcapture=new ScreenShotCapture();
 		loginpage = new LoginPage(driver);
@@ -44,7 +44,7 @@ public class AdminUserTest extends Base {
         adminuserpage.newButtonClick();	
         excelread.setExcelFile("UserCreationData", "UserData");
         String username = excelread.getCellData(2, 0);
-        //username=username+GeneralUtilities.getRandomFullName();
+        username=username+GeneralUtilities.getRandomFullName();
         screenshotcapture.takeScreenshot(driver, "screenshot1");
         String password = excelread.getCellData(2, 1);
 		String usertype = excelread.getCellData(2, 2);
@@ -57,7 +57,7 @@ public class AdminUserTest extends Base {
        
         
 	}
-	@Test(dataProvider = "SearchData", dataProviderClass = DataProviderNew.class)
+	@Test(dataProvider = "NewSearchData", dataProviderClass = DataProviderNew.class)
 	
 	public void searchUser(String username ,String userType)throws InterruptedException
 	{
@@ -75,13 +75,13 @@ public class AdminUserTest extends Base {
 		
 	}//listeners-interface whether testcase passed or failed
 	
-	@Test
+	@Test(dataProvider = "NewSearchData", dataProviderClass = DataProviderNew.class)
 	public void verifyUser(String username ,String userType)throws InterruptedException
 	{
 		
 		loginpage = new LoginPage(driver);
 		loginpage.login();
-		homepage = new HomePage(driver);
+		//homepage = new HomePage(driver);
 		adminuserpage = new AdminUserPage(driver);
 		adminuserpage.adminUserClick();
 		adminuserpage.searchUser();
@@ -93,6 +93,29 @@ public class AdminUserTest extends Base {
 		String expectedUserNmae="tomy";
 		Assert.assertEquals(actualUserName, expectedUserNmae);
 		
+	}
+	@Test
+	public void verifyCreatedUserLogin() //create user-login-logout-login and check whether same newly created user login
+	
+	{
+		loginpage = new LoginPage(driver);
+		homepage = new HomePage(driver);
+		loginpage.login();
+		adminuserpage = new AdminUserPage(driver);
+		adminuserpage.adminUserClick();
+		String userName = GeneralUtilities.getRandomFullName();
+		String passWord = GeneralUtilities.getRandomFirstName();
+		String userTypes="Staff";
+		adminuserpage.newButtonClick();	
+		adminuserpage.saveUser(userName, passWord, userTypes);
+		
+		homepage.logout();
+		loginpage.login(userName, passWord);
+		String actualProfileName=homepage.getProfileName();
+		String expectedProfileName=userName;
+		Assert.assertEquals(actualProfileName, expectedProfileName);
+		
+	
 	}
 	@Test
 	public void listNames()
