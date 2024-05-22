@@ -27,8 +27,13 @@ public class GeneralUtilities {
 		Faker faker=new Faker();
 		return faker.name().fullName();
 	}
+	public static String getRandomFirstName() {
+		Faker faker=new Faker();
+		return faker.name().firstName();
+	}
 	public boolean isTextContains(WebElement element,String expectedText)
 	{
 		return element.getText().contains(expectedText);
 	}
+	
 }
