@@ -9,9 +9,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 
 import com.sevenmartsupermarket.constants.Constants;
+import com.sevenmartsupermarket.utilities.ScreenShotCapture;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -19,7 +23,8 @@ public class Base {
 
 	public WebDriver driver;
 	Properties properties = new Properties();
-
+	ScreenShotCapture screenshotcapture=new ScreenShotCapture();
+	
 	/** Base Constructor **/
 	/* The constructor Base() loads properties from a configuration file specified by Constants.CONFIG_FILE_PATH */
 	
@@ -61,18 +66,28 @@ public class Base {
 	driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(Constants.IMPLICIT_WAIT));
 	
 	}
-
-	@BeforeMethod 
-	/* The launchBrowser() method annotated with @BeforeMethod initializes the browser before each test method is
-	 *  executed by retrieving the browser type and URL from the properties file and passing them to the
-	 *   initialize() method.This setup ensures that your tests start with a fresh browser instance, 
-	 *   maximizing reusability and maintainability.*/
+  @Parameters("browzer")
+	@BeforeMethod (enabled =false)
+	public void launchBrowser(String browser) {
+		String url = properties.getProperty("url");
+		initialize(browser, url);
+	}
+ @BeforeMethod (enabled=true)
+ public void launchBrowser()
+	{
+	String browzer=properties.getProperty("browser");
+	String url=properties.getProperty("url");
+	initialize(browzer,url);
+	}
 	
-		public void launchBrowser()
-		{
-		String browzer=properties.getProperty("browser");
-		String url=properties.getProperty("url");
-		initialize(browzer,url);
-		}
+	@AfterMethod
+	public void terminateBrowser(ITestResult itestresult)//testng listener
+	{
+	if (itestresult.getStatus()==ITestResult.FAILURE)
+	{
+		screenshotcapture.takeScreenshot(driver,itestresult.getName());//currently run method
+	}
+	}
+	
 
 }
