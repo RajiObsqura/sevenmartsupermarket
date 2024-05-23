@@ -32,7 +32,7 @@ public class AdminUserTest extends Base {
 		adminuserpage.adminUserClick();
         
 	}
-	@Test 
+	@Test( groups=("smoke"),retryAnalyzer = com.sevenmartsupermarket.listeners.RetryAnalyzer.class)
 	public void verifyNewUserCreation()
 	{
 		ScreenShotCapture screenshotcapture=new ScreenShotCapture();
@@ -50,7 +50,7 @@ public class AdminUserTest extends Base {
 		String usertype = excelread.getCellData(2, 2);
 		adminuserpage.saveUser(username, password, usertype); 
 		String actual = adminuserpage.getTextAlertMessage();
-		String expected = "User Created Successfully";
+		String expected = "RUser Created Successfully";
 		Boolean result = actual.contains(expected);
 		Assert.assertTrue(result);
 		
@@ -117,7 +117,7 @@ public class AdminUserTest extends Base {
 		
 	
 	}
-	@Test
+	@Test (groups="smoke")
 	public void listNames()
 	{
 		loginpage = new LoginPage(driver);
@@ -128,7 +128,7 @@ public class AdminUserTest extends Base {
 		adminuserpage.listAllUsers();
 	}
 	
-	@Test
+	@Test (groups={"sanity","first"})
 	public void verifyDeactivationFunctionality() 
 	{
 		loginpage = new LoginPage(driver);
@@ -137,6 +137,37 @@ public class AdminUserTest extends Base {
 		adminuserpage = new AdminUserPage(driver);
 		adminuserpage.adminUserClick();
 		adminuserpage.deactivateUser("Trump");
+	}
+	@Test 
+	public void deleteUser()
+	{
+		loginpage = new LoginPage(driver);
+		loginpage.login();
+		homepage = new HomePage(driver);
+		adminuserpage = new AdminUserPage(driver);
+		adminuserpage.adminUserClick();
+		 adminuserpage.newButtonClick();
+		excelread.setExcelFile("UserDeleteData", "AddUser");
+		String username = excelread.getCellData(2, 0);
+		//username=username+GeneralUtilities.getRandomFullName();
+        String password = excelread.getCellData(2, 1);
+		String usertype = excelread.getCellData(2, 2);
+		adminuserpage.saveUser(username, password, usertype); 
+		//searching created user
+		adminuserpage.searchUser();
+		excelread.setExcelFile("UserDeleteData", "SearchData");
+		String username1 = excelread.getCellData(1, 0);
+		String usertype1 = excelread.getCellData(1, 1);
+		adminuserpage.searchUsername(username1);
+		adminuserpage.searchUserType(usertype1);
+		adminuserpage.searchClick();
+		adminuserpage.deleteUser();
+		driver.switchTo().alert().accept();
+		String actual = adminuserpage.getTextAlertMessage();
+		String expected = "User Deleted Successfully";
+		Boolean result = actual.contains(expected);
+		Assert.assertTrue(result);
+		
 	}
 	}
 	
