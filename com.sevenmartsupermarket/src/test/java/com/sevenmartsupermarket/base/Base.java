@@ -72,7 +72,7 @@ public class Base {
 		String url = properties.getProperty("url");
 		initialize(browser, url);
 	}
- @BeforeMethod (enabled=true)
+ @BeforeMethod (enabled=true,alwaysRun = true)
  public void launchBrowser()
 	{
 	String browzer=properties.getProperty("browser");
