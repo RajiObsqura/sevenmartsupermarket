@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Parallel" thread-count="5" parallel="tests">
+	<listeners>
+		<listener class-name="com.sevenmartsupermarket.listeners.ExtentReporter"></listener>
+	</listeners>
+	<test name="Loginpage">
+		<classes>
+			<class name="com.sevenmartsupermarket.tests.LoginTest">
+			</class>
+		</classes>
+	</test>
+	<test name="Manageproductdetails">
+		<classes>
+			<class name="com.sevenmartsupermarket.tests.ManageProductTest">
+			</class>
+		</classes>
+	</test>
+
+	<test name="UserCreation">
+		<classes>
+			<class name="com.sevenmartsupermarket.tests.AdminUserTest">
+			</class>
+
+		</classes>
+	
+	</test>
+</suite>

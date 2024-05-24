@@ -1,0 +1,27 @@
+<suite name="Parallel" thread-count="5" parallel="tests">
+	<test name="run in chrome">
+		<parameter name="browzer" value="chrome">
+		</parameter>
+		<classes>
+			<class name="com.sevenmartsupermarket.tests.LoginTest">
+			</class>
+		</classes>
+	</test>
+	<test name="run in edge">
+		<parameter name="browzer" value="edge">
+		</parameter>
+		<classes>
+			<class name="com.sevenmartsupermarket.tests.LoginTest">
+			</class>
+		</classes>
+	</test>
+
+	<test name="run in firefox">
+		<parameter name="browzer" value="firefox">
+		</parameter>
+		<classes>
+			<class name="com.sevenmartsupermarket.tests.LoginTest">
+			</class>
+		</classes>
+	</test>
+</suite>
