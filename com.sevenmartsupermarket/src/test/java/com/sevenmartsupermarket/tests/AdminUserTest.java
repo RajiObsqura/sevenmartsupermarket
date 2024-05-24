@@ -194,6 +194,7 @@ public class AdminUserTest extends Base {
 		adminuserpage.searchUserType(usertype1);
 		adminuserpage.searchClick();
 		//edit user 
+		// new
 		adminuserpage.editButtonClick();
 		excelread.setExcelFile("UserEditData","UserEdit");
 		String username3 = excelread.getCellData(1, 0);
