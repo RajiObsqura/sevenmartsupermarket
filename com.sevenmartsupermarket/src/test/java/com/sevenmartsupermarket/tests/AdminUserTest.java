@@ -169,6 +169,43 @@ public class AdminUserTest extends Base {
 		Assert.assertTrue(result);
 		
 	}
+	@Test
+	public void editUser()
+	{
+		loginpage = new LoginPage(driver);
+		loginpage.login();
+		homepage = new HomePage(driver);
+		adminuserpage = new AdminUserPage(driver);
+		adminuserpage.adminUserClick();
+		 adminuserpage.newButtonClick();
+		excelread.setExcelFile("UserEditData", "UserAdd");
+		String username = excelread.getCellData(2, 0);
+		username=username+GeneralUtilities.getRandomFullName();
+        String password = excelread.getCellData(2, 1);
+		String usertype = excelread.getCellData(2, 2);
+		adminuserpage.saveUser(username, password, usertype); 
+		//searching created user
+		adminuserpage.searchUser();
+		excelread.setExcelFile("UserEditData", "UserSearch");
+		//String username1 = excelread.getCellData(1, 0);
+		
+		String usertype1 = excelread.getCellData(1, 1);
+		adminuserpage.searchUsername(username);
+		adminuserpage.searchUserType(usertype1);
+		adminuserpage.searchClick();
+		//edit user 
+		adminuserpage.editButtonClick();
+		excelread.setExcelFile("UserEditData","UserEdit");
+		String username3 = excelread.getCellData(1, 0);
+		String password3=excelread.getCellData(1, 1);
+		String usertype3= excelread.getCellData(1, 2);
+		adminuserpage.updateButtonClick();
+		String actual = adminuserpage.getTextAlertMessage();
+		String expected = "User Updated Successfully";
+		Boolean result = actual.contains(expected);
+		Assert.assertTrue(result);
+	}
+	
 	}
 	
 	
