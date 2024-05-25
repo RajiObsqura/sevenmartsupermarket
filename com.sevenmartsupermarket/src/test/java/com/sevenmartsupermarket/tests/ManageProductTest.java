@@ -42,7 +42,7 @@ public class ManageProductTest extends Base {
 		manageproductpage.searchElementTitle();
 		manageproductpage.searchForProductitem();
 		String actualItemName=manageproductpage.verifyTableItemdata();
-		String expectedItemName="Biriyani";
+		String expectedItemName="Biriyani P1142 Combo";
 		Assert.assertEquals(actualItemName, expectedItemName);
 	}
 	@Test
