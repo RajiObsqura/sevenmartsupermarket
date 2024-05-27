@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.sevenmartsupermarket.DataProviders.DataProviderNew;
 import com.sevenmartsupermarket.base.Base;
 import com.sevenmartsupermarket.pages.AdminUserPage;
 import com.sevenmartsupermarket.pages.HomePage;
@@ -84,7 +85,7 @@ public class AdminUserTest extends Base {
 		
 	}//listeners-interface whether testcase passed or failed
 	
-	@Test(dataProvider = "NewSearchData", dataProviderClass = DataProviderNew.class)
+	@Test(dataProvider = "SearchDataNew", dataProviderClass = DataProviderNew.class)
 	public void verifyUser(String username ,String userType)throws InterruptedException
 	{
 		
@@ -99,7 +100,7 @@ public class AdminUserTest extends Base {
 		adminuserpage.searchClick();
 		 
 		String actualUserName=adminuserpage.verifyUserdata();
-		String expectedUserName="rakhee";
+		String expectedUserName="Rakhee";
 		Assert.assertEquals(actualUserName, expectedUserName);
 		
 	}
