@@ -28,7 +28,7 @@ public class ManageLocationTest extends Base
 	}
 	
 	@Test
-	public void addLocation()
+	public void VerifyaddLocation()
 	{
 		loginpage = new LoginPage(driver);
 		loginpage.login();
