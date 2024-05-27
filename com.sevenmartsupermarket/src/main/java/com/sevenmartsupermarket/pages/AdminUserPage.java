@@ -20,6 +20,9 @@ public class AdminUserPage {
 	WebDriver driver;
 	PageUtilities pageutility;
 	GeneralUtilities generalutilitiy = new GeneralUtilities();
+	@FindBy(xpath="(//h4[@class='card-title'])[2]")
+	WebElement adminuserpagetitle;
+	
 
 	@FindBy(xpath = "(//a[@class='small-box-footer'])[2]")
 	WebElement adminbutton;
@@ -38,14 +41,14 @@ public class AdminUserPage {
 	WebElement submitnewuser;
 	@FindBy(xpath = "//a[@class='btn btn-rounded btn-primary']")
 	WebElement searchButtton;
-
 	@FindBy(xpath = "//input[@id='un']")
 	WebElement usernamesearch;
 	@FindBy(xpath = "//select[@id='ut']")
 	WebElement usertype;
 	@FindBy(xpath = "(//button[@type='submit'])[1]")
 	WebElement searchuserbutton;
-
+    @FindBy(xpath="//span[@id='res']")
+    WebElement searchResultNotFound;
 	@FindBy(xpath = "//table[@class='table table-bordered table-hover table-sm']//tbody//tr[1]//td[1]")
 	WebElement getuserData;
 	@FindBy(xpath = "//table[@class='table table-bordered table-hover table-sm']/tbody//tr[1]//td")
@@ -87,6 +90,11 @@ public class AdminUserPage {
 	public void adminUserClick() {
 		adminbutton.click();
 	}
+	public String getTextOfAdminUser()
+	{
+		return adminuserpagetitle.getText();
+		
+	}
 
 	public void newButtonClick() {
 		newUserAdd.click();
@@ -127,6 +135,12 @@ public class AdminUserPage {
 		usertype.sendKeys(userType);
 
 	}
+	public String searchUserResult()
+	{
+		return searchResultNotFound.getText();
+	}
+	
+	
 
 	public void searchClick() {
 		searchuserbutton.click();
