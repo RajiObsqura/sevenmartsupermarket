@@ -3,6 +3,7 @@ package com.sevenmartsupermarket.pages;
 import java.io.FileInputStream;
 import java.util.Properties;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -29,6 +30,8 @@ public class LoginPage {
 	WebElement userimage;
 	@FindBy(xpath = "(//a[@class='dropdown-item'])[2]")
 	WebElement logoutdropdown;
+	
+	By homepagewaitElement=By.xpath("//a[@class='d-block']");
 	// constructors
 
 	public LoginPage(WebDriver driver) {
@@ -64,6 +67,7 @@ public class LoginPage {
 		enterUserName(userName);
 		enterPassword(password);
 		loginBtn();
+		waitutility.waitForElementToBeVisible(homepagewaitElement, 1000);
 	}
 
 	public void login(String userName, String password) {
