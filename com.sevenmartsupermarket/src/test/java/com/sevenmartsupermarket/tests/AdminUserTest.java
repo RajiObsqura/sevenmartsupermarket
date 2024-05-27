@@ -1,5 +1,7 @@
 package com.sevenmartsupermarket.tests;
 
+import static org.testng.Assert.assertFalse;
+
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
@@ -30,12 +32,17 @@ public class AdminUserTest extends Base {
 		homepage = new HomePage(driver);
 		adminuserpage = new AdminUserPage(driver);
 		adminuserpage.adminUserClick();
+		String actual = adminuserpage.getTextOfAdminUser();
+		String expected="Admin Users";
+		Assert.assertEquals(actual,expected);
+		
+		
         
 	}
 	@Test( groups=("smoke"),retryAnalyzer = com.sevenmartsupermarket.listeners.RetryAnalyzer.class)
 	public void verifyNewUserCreation()
 	{
-		ScreenShotCapture screenshotcapture=new ScreenShotCapture();
+		//ScreenShotCapture screenshotcapture=new ScreenShotCapture();
 		loginpage = new LoginPage(driver);
 		loginpage.login();
 		//homepage = new HomePage(driver);
@@ -45,12 +52,12 @@ public class AdminUserTest extends Base {
         excelread.setExcelFile("UserCreationData", "UserData");
         String username = excelread.getCellData(2, 0);
         username=username+GeneralUtilities.getRandomFullName();
-        screenshotcapture.takeScreenshot(driver, "screenshot1");
+       // screenshotcapture.takeScreenshot(driver, "screenshot1");
         String password = excelread.getCellData(2, 1);
 		String usertype = excelread.getCellData(2, 2);
 		adminuserpage.saveUser(username, password, usertype); 
 		String actual = adminuserpage.getTextAlertMessage();
-		String expected = "RUser Created Successfully";
+		String expected = "User Created Successfully";
 		Boolean result = actual.contains(expected);
 		Assert.assertTrue(result);
 		
@@ -71,6 +78,8 @@ public class AdminUserTest extends Base {
 		adminuserpage.searchUsername(username);
 		adminuserpage.searchUserType(userType);
 		adminuserpage.searchClick();
+		//Boolean verifyText=adminuserpage.searchUserResult().equalsIgnoreCase(".........RESULT NOT FOUND.......");
+		//assertFalse(verifyText);
 		//screenshotcapture.takeScreenshot(driver, "screenshot1");
 		
 	}//listeners-interface whether testcase passed or failed
@@ -90,8 +99,8 @@ public class AdminUserTest extends Base {
 		adminuserpage.searchClick();
 		 
 		String actualUserName=adminuserpage.verifyUserdata();
-		String expectedUserNmae="tomy";
-		Assert.assertEquals(actualUserName, expectedUserNmae);
+		String expectedUserName="rakhee";
+		Assert.assertEquals(actualUserName, expectedUserName);
 		
 	}
 	@Test
@@ -118,7 +127,7 @@ public class AdminUserTest extends Base {
 	
 	}
 	@Test (groups="smoke")
-	public void listNames()
+	public void VerifylistNames()
 	{
 		loginpage = new LoginPage(driver);
 		loginpage.login();
@@ -136,10 +145,15 @@ public class AdminUserTest extends Base {
 		homepage = new HomePage(driver);
 		adminuserpage = new AdminUserPage(driver);
 		adminuserpage.adminUserClick();
-		adminuserpage.deactivateUser("Trump");
+		adminuserpage.deactivateUser("ee1");
+		driver.switchTo().alert().accept();
+		String actual = adminuserpage.getTextAlertMessage();
+		String expected = "User Status Changed Successfully";
+		Boolean result = actual.contains(expected);
+		Assert.assertTrue(result);
 	}
 	@Test 
-	public void deleteUser()
+	public void VerifydeleteUser()
 	{
 		loginpage = new LoginPage(driver);
 		loginpage.login();
