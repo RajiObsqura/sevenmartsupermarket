@@ -31,7 +31,7 @@ public class ManageProductTest extends Base {
 	}
     
 	@Test
-	public void searchItem()
+	public void VerifysearchItem()
 	{
 		loginpage = new LoginPage(driver);
 		loginpage.login();

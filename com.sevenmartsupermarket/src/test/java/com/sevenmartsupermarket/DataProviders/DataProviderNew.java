@@ -1,4 +1,4 @@
-package com.sevenmartsupermarket.tests;
+package com.sevenmartsupermarket.DataProviders;
 
 import org.testng.annotations.DataProvider;
 
@@ -23,6 +23,12 @@ import com.sevenmartsupermarket.utilities.ExcelReader;
 	
 		excelread.setExcelFile("UserCreationData","SearchDataWithExcel");
 		return excelread.getMultidimentionalData(2,2);
+	}
+   @DataProvider(name="SearchDataNew")
+	public Object[][] searchdetailsnew()
+	{
+	return new Object [][] {{"rakhee","staff"}};
+		
 	}
 	
 }
